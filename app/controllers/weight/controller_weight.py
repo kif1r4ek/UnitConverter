@@ -10,5 +10,5 @@ router = APIRouter(
 async def get_weight_page(request: Request):
     return templates.TemplateResponse(
         "weight.html",
-        {"request": request}
+        {"request": request, "title": "Конвертер веса"}
     )

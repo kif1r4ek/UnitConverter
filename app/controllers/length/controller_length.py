@@ -10,5 +10,5 @@ router = APIRouter(
 async def get_length_page(request: Request):
     return templates.TemplateResponse(
         "length.html",
-        {"request": request},
+        {"request": request, "title": "Конвертер длины"},
     )
