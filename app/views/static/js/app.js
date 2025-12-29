@@ -1,17 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔄 App.js loaded!'); // Проверка загрузки
+    console.log('App.js loaded!'); // Проверка загрузки
     
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const navTabs = document.querySelector('.nav-tabs');
     
-    console.log('🔍 Mobile toggle found:', mobileMenuToggle); // Debug
-    console.log('🔍 Nav tabs found:', navTabs); // Debug
+    console.log('Mobile toggle found:', mobileMenuToggle); // Debug
+    console.log('Nav tabs found:', navTabs); // Debug
     
     if (mobileMenuToggle && navTabs) {
         mobileMenuToggle.addEventListener('click', function(e) {
             e.stopPropagation(); // Предотвращаем всплытие события
             navTabs.classList.toggle('show');
-            console.log('📱 Menu toggled!', navTabs.classList.contains('show')); // Debug
+            console.log('Menu toggled!', navTabs.classList.contains('show')); // Debug
         });
 
         document.addEventListener('click', function(event) {
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     } else {
-        console.error('❌ Mobile menu elements not found!');
+        console.error('Mobile menu elements not found!');
     }
 });
 
