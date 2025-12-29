@@ -2,9 +2,91 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Title</title>
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<meta content="Unit Converter - Convert length, weight, and temperature units easily" name="description">
+	<title>{% block title %}Unit Converter{% endblock %}</title>
+
+	<link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+	      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" rel="stylesheet">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+	<link href="{{ url_for('static', path='/css/styles.css') }}" rel="stylesheet">
+
+	{% block extra_css %}{% endblock %}
 </head>
 <body>
 
+	<!-- Header with logo and navigation -->
+	<header class="header">
+		<div class="container-fluid">
+			<div class="row align-items-center">
+				<!-- Logo -->
+				<div class="col-md-3 col 6">
+					<a href="/" class="logo-linc">
+						<img src="{{ url_for('static', path='/images/logo.png') }}" alt="Unit Converter" class="logo">
+					</a>
+				</div>
+
+				 <!-- Navigation -->
+				<div class="col-md-9 col-6">
+					<nav class="navbar">
+						<ul class="nav-tabs">
+							<li class="nav-item">
+								<a href="/length" class="nav-link {% block active_length %}{% endblock %}">
+                                    <i class="bi bi-rulers"></i>
+                                    <span>Length</span>
+                                </a>
+							</li>
+							<li class="nav-item">
+								<a href="/temperature" class="nav-link {% block active_temperature %}{% endblock %}">
+                                    <i class="bi bi-thermometer-half"></i>
+                                    <span>Temperature</span>
+                                </a>
+							</li>
+							<li class="nav-item">
+								<a href="/weight" class="nav-link {% block active_weight %}{% endblock %}">
+                                    <i class="bi bi-box-seam"></i>
+                                    <span>Weight</span>
+                                </a>
+							</li>
+						</ul>
+
+						<!-- Mobile menu toggle -->
+						<button class="mobile-menu-toggle" id="mobileMenuToggle">
+							<i class="bi bi-list"></i>
+						</button>
+					</nav>
+				</div>
+			</div>
+		</div>
+	</header>
+
+	<!-- Main content -->
+	<main class="main-content">
+		<div class="container">
+			{% block content %}
+
+			{% endblock %}
+		</div>
+	</main>
+
+	<!-- Footer -->
+	<footer class="footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-6">
+					 <p>&copy; 2025 Unit Converter. All rights reserved.</p>
+				</div>
+				<div class="col-md-6 text-md-end">
+					<p>Built with <i class="bi bi-heart-fill text-danger"></i> using FastAPI & Bootstrap</p>
+				</div>
+			</div>
+		</div>
+	</footer>
+
+	<script crossorigin="anonymous"
+	        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+	        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="{{ url_for('static', path='/js/app.js') }}"></script>
+	{% block extra_js %}{% endblock %}
 </body>
 </html>

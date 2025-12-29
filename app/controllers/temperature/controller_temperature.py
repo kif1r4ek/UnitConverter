@@ -10,5 +10,5 @@ router = APIRouter(
 async def get_temperature_page(request: Request):
     return templates.TemplateResponse(
         "temperature.html",
-        {"request": request},
+        {"request": request, "title": "Конвертер температуры"},
     )
