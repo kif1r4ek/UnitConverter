@@ -15,7 +15,7 @@
 </head>
 <body>
 
-	<!-- Header with logo and navigation -->
+	<!-- Header -->
 	<header class="header">
 		<div class="container-fluid">
 			<div class="row align-items-center">
@@ -50,7 +50,7 @@
 							</li>
 						</ul>
 
-						<!-- Mobile menu toggle -->
+						<!-- Mobile menu -->
 						<button class="mobile-menu-toggle" id="mobileMenuToggle">
 							<i class="bi bi-list"></i>
 						</button>
@@ -74,10 +74,10 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-6">
-					 <p>&copy; 2025 Unit Converter. All rights reserved.</p>
+					 <p>repository - https://github.com/kif1r4ek/UnitConverter</p>
 				</div>
 				<div class="col-md-6 text-md-end">
-					<p>Built with <i class="bi bi-heart-fill text-danger"></i> using FastAPI & Bootstrap</p>
+					<p>somthing py py py</p>
 				</div>
 			</div>
 		</div>
@@ -87,6 +87,6 @@
 	        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
 	        src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 	<script src="{{ url_for('static', path='/js/app.js') }}"></script>
-
+	{% block extra_js %}{% endblock %}
 </body>
 </html>

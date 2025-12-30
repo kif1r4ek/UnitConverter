@@ -1,17 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('App.js loaded!'); // Проверка загрузки
     
     const mobileMenuToggle = document.getElementById('mobileMenuToggle');
     const navTabs = document.querySelector('.nav-tabs');
     
-    console.log('Mobile toggle found:', mobileMenuToggle); // Debug
-    console.log('Nav tabs found:', navTabs); // Debug
-    
     if (mobileMenuToggle && navTabs) {
         mobileMenuToggle.addEventListener('click', function(e) {
-            e.stopPropagation(); // Предотвращаем всплытие события
+            e.stopPropagation();
             navTabs.classList.toggle('show');
-            console.log('Menu toggled!', navTabs.classList.contains('show')); // Debug
         });
 
         document.addEventListener('click', function(event) {
@@ -19,8 +14,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 navTabs.classList.remove('show');
             }
         });
-    } else {
-        console.error('Mobile menu elements not found!');
     }
 });
 
@@ -31,7 +24,7 @@ class UnitConverter {
     }
 
     initEventListeners() {
-        // Будем добавлять обработчики событий для форм
+        // Добавить обработчики событий для форм
         const convertBtn = document.getElementById('convertBtn');
         const swapBtn = document.getElementById('swapBtn');
         

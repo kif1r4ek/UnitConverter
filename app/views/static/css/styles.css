@@ -35,7 +35,7 @@
 }
 
 body {
-	font-family: 'Aril', Tahoma, Geneva, Verdana, sans-serif;
+	font-family: 'Arial', Tahoma, Geneva, Verdana, sans-serif;
 	background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
 	color: var(--text-dark);
 	min-height: 100vh;
@@ -298,6 +298,7 @@ body {
 		flex-direction: column;
 		margin-top: 1rem;
 		width: 200px;
+		z-index: 1000;
 	}
 	
 	.nav-tabs.show {

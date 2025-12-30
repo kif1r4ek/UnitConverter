@@ -1,10 +1,164 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %} Unit Converter - Convert Length, Weight & Temperature {% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='css/home.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<!-- Hero -->
+<div class="hero-section text-center">
+	<div class="hero-content">
+		<h1 class="hero-title">
+			<i class="bi bi-arrow-left-right"></i>
+            Unit Converter
+		</h1>
+		<p class="hero-subtitle">
+			Quickly and accurately convert length, weight, and temperature units
+		</p>
+		<p class="hero-description">
+			A lightweight and intuitive tool for everyday unit conversions.
+            No registration required — choose units, enter a value, and get results instantly.
+		</p>
+	</div>
+</div>
+
+<!-- Converter Cards -->
+<div class="converter-cards">
+	<div class="row g-4">
+
+		<!-- Length -->
+		<div class="col-md-4">
+			<a href="/length" class="card converter-card">
+				<div class="crad-item text-center">
+					<div class="card-icon">
+                        <i class="bi bi-rulers"></i>
+                    </div>
+					<h3 class="card-title">Length</h3>
+					<p class="card-description">Convert between millimeters, centimeters, meters, kilometers, inches,
+						feet, yards, miles, and more
+					</p>
+					<div class="card-examples">
+						<span class="badge">mm</span>
+                        <span class="badge">cm</span>
+                        <span class="badge">m</span>
+                        <span class="badge">km</span>
+                        <span class="badge">inch</span>
+                        <span class="badge">foot</span>
+                        <span class="badge">mile</span>
+					</div>
+					<div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+				</div>
+			</a>
+		</div>
+
+		<!-- Temperature  -->
+		<div class="col-md-4">
+            <a href="/temperature" class="card converter-card">
+                <div class="card-item text-center">
+                    <div class="card-icon">
+                        <i class="bi bi-thermometer-half"></i>
+                    </div>
+                    <h3 class="card-title">Temperature</h3>
+                    <p class="card-description">
+                        Convert between Celsius, Fahrenheit, and Kelvin temperature scales
+                    </p>
+                    <div class="card-examples">
+                        <span class="badge">°C</span>
+                        <span class="badge">°F</span>
+                        <span class="badge">K</span>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+		<!-- Weight   -->
+		<div class="col-md-4">
+            <a href="/weight" class="card converter-card">
+                <div class="card-item text-center">
+                    <div class="card-icon">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                    <h3 class="card-title">Weight</h3>
+                    <p class="card-description">
+                        Convert between milligrams, grams, kilograms, tons, ounces, pounds, and stones
+                    </p>
+                    <div class="card-examples">
+                        <span class="badge">mg</span>
+                        <span class="badge">g</span>
+                        <span class="badge">kg</span>
+                        <span class="badge">ton</span>
+                        <span class="badge">oz</span>
+                        <span class="badge">lb</span>
+                    </div>
+                    <div class="card-arrow">
+                        <i class="bi bi-arrow-right"></i>
+                    </div>
+                </div>
+            </a>
+        </div>
+	</div>
+</div>
+
+<!-- Features Section -->
+<div class="feature-section">
+	<div class="row text-center">
+		<div class="col-md-4">
+			<div class="feature-item">
+				<i class="bi bi-lightning-charge-fill feature-icon"></i>
+                <h4>Fast & Accurate</h4>
+                <p>Instant conversions with precise calculations</p>
+			</div>
+		</div>
+		<div class="col-md-4">
+            <div class="feature-item">
+                <i class="bi bi-phone-fill feature-icon"></i>
+                <h4>Mobile Friendly</h4>
+                <p>Works perfectly on all devices and screen sizes</p>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="feature-item">
+                <i class="bi bi-shield-fill-check feature-icon"></i>
+                <h4>No Registration</h4>
+                <p>Start converting immediately, no sign-up needed</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- How to Use Section -->
+<div class="how-to-use">
+	<h2 class="text-centre mb-4"><span>How</span> to use</h2>
+	<div class="row">
+		<div class="col-md-3 text-center">
+            <div class="step-number">1</div>
+            <h5>Choose Converter</h5>
+            <p>Select the type of unit you want to convert</p>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="step-number">2</div>
+            <h5>Select Units</h5>
+            <p>Choose the units to convert from and to</p>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="step-number">3</div>
+            <h5>Enter Value</h5>
+            <p>Type in the value you want to convert</p>
+        </div>
+        <div class="col-md-3 text-center">
+            <div class="step-number">4</div>
+            <h5>Get Result</h5>
+            <p>See the converted value instantly</p>
+        </div>
+	</div>
+</div>
+
+{% endblock %}
