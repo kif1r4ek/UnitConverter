@@ -1,0 +1,15 @@
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.page-title i {
+    color: var(--accent-blue);
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: rgba(45, 62, 68, 0.7);
+}
