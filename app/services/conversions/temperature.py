@@ -8,14 +8,15 @@ UNITS_TEMPERATURE_MAPPING = {
     "kelvin": "kelvin"
 }
 
-def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
+def convert_temperature(value: float, from_unit: str, to_unit: str, decimals: int = 2) -> float:
     """
         Convert temperature from one unit to another
 
         Args:
-            value: Numeric value to convert
-            from_unit: Source unit ("degC", "degF", "kelvin")
-            to_unit: Target unit ("kelvin", "degC", "degF")
+            :param value: Numeric value to convert
+            :param from_unit: Source unit ("degC", "degF", "kelvin")
+            :param to_unit: Target unit ("kelvin", "degC", "degF")
+            :param decimals: Number of decimal places to round to
 
         Returns:
             Converted value rounded to 2 decimal places
@@ -40,7 +41,7 @@ def convert_temperature(value: float, from_unit: str, to_unit: str) -> float:
         quantity = ureg.Quantity(value, from_unit)
         result = quantity.to(to_unit)
 
-        return round(result.magnitude, 2)
+        return round(result.magnitude, decimals)
     except (DimensionalityError, UndefinedUnitError) as e:
         raise ValueError(f"Conversion error from {from_unit} to {to_unit}: {str(e)}")
     except Exception as e:
