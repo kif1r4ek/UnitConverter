@@ -3,14 +3,14 @@ from enum import Enum
 
 
 class UnitsWeight(Enum):
-    MILLIGRAM: "mg"
-    GRAM: "g"
-    KILOGRAM: "kg"
-    TON: "ton"
-    OUNCE: "oz"
-    POUND: "lb"
-    STONE: "stone"
-    TON_US: "ton_us"
+    MILLIGRAM = "mg"
+    GRAM = "g"
+    KILOGRAM = "kg"
+    TON = "ton"
+    OUNCE = "oz"
+    POUND = "lb"
+    STONE = "stone"
+    TON_US = "ton_us"
 
     def get_display_name(self):
 

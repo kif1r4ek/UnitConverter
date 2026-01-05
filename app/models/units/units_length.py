@@ -2,14 +2,14 @@ from enum import Enum
 
 
 class UnitsLength(Enum):
-    MILLIMETER: "mm"
-    CENTIMETER: "cm"
-    METER: "m"
-    KILOMETER: "km"
-    INCH: "inch"
-    FOOT: "foot"
-    YARD: "yard"
-    MILE: "mile"
+    MILLIMETER = "mm"
+    CENTIMETER = "cm"
+    METER = "m"
+    KILOMETER = "km"
+    INCH = "inch"
+    FOOT = "foot"
+    YARD = "yard"
+    MILE = "mile"
 
     def get_display_name(self):
 
@@ -27,11 +27,11 @@ class UnitsLength(Enum):
         return names[self.value]
 
 class UnitsArea(Enum):
-    SQUARE_METER: "m2"
-    SQUARE_KILOMETER: "km2"
-    HECTARE: "hectare"
-    ACRE: "acre"
-    SQUARE_FOOT: "sqft"
+    SQUARE_METER = "m2"
+    SQUARE_KILOMETER = "km2"
+    HECTARE = "hectare"
+    ACRE = "acre"
+    SQUARE_FOOT = "sqft"
 
     def get_display_name(self):
         names = {
