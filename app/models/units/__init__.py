@@ -1,6 +1,6 @@
-from app.models.units.units_length import UnitsLength, UnitsArea
-from app.models.units.units_temperature import UnitsTemperature
-from app.models.units.units_weight import UnitsWeight
+from app.models.units.length import UnitsLength, UnitsArea
+from app.models.units.temperature import UnitsTemperature
+from app.models.units.weight import UnitsWeight
 
 __all__ = [
     'UnitsLength',
@@ -8,3 +8,4 @@ __all__ = [
     'UnitsTemperature',
     'UnitsWeight'
 ]
+
