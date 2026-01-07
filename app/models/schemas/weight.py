@@ -2,7 +2,7 @@ from pydantic import BaseModel, field_validator
 from app.domain.units.weight import UNITS_WEIGHT_MAPPING
 
 
-class WeightConvertRequest(BaseModel):
+class SWeightConvertRequest(BaseModel):
     value: float
     from_unit: str
     to_unit: str

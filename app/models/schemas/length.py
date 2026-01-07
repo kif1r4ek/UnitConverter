@@ -2,7 +2,7 @@ from pydantic import BaseModel, field_validator
 from app.domain.units.length import UNITS_LENGTH_MAPPING
 
 
-class LengthConvertRequest(BaseModel):
+class SLengthConvertRequest(BaseModel):
     value: float
     from_unit: str
     to_unit: str

@@ -2,7 +2,7 @@ from pydantic import BaseModel, field_validator
 from app.domain.units.temperature import UNITS_TEMPERATURE_MAPPING
 
 
-class TemperatureConvertRequest(BaseModel):
+class STemperatureConvertRequest(BaseModel):
     value: float
     from_unit: str
     to_unit: str
