@@ -1,12 +1,7 @@
 from pint import UnitRegistry, DimensionalityError, UndefinedUnitError
+from app.dependencies.common import ureg
+from app.domain.units.temperature import UNITS_TEMPERATURE_MAPPING
 
-ureg = UnitRegistry()
-
-UNITS_TEMPERATURE_MAPPING = {
-    "celsius": "degC",
-    "fahrenheit": "degF",
-    "kelvin": "kelvin"
-}
 
 def convert_temperature(value: float, from_unit: str, to_unit: str, decimals: int = 2) -> float:
     """
@@ -47,9 +42,6 @@ def convert_temperature(value: float, from_unit: str, to_unit: str, decimals: in
     except Exception as e:
         # Позже здесь будет logger
         raise ValueError(f"Unexpected error during conversion: {str(e)}")
-
-
-
 
 
 

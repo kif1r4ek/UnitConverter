@@ -1,17 +1,7 @@
 from pint import UnitRegistry, DimensionalityError, UndefinedUnitError
+from app.dependencies.common import ureg
+from app.domain.units.weight import UNITS_WEIGHT_MAPPING
 
-ureg = UnitRegistry()
-
-UNITS_WEIGHT_MAPPING = {
-    "mg": "milligram",
-    "g": "gram",
-    "kg": "kilogram",
-    "ton": "tonne",
-    "oz": "ounce",
-    "lb": "pound",
-    "stone": "stone",
-    "ton_us": "short_ton",
-}
 
 def convert_weight(value: float, from_unit: str, to_unit: str, decimals: int = 2) -> float:
     """
