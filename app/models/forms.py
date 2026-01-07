@@ -5,14 +5,17 @@ class ConversionRequest(BaseModel):
     value: float = Field(..., description="Value to convert")
     from_unit: str = Field(..., description="Current unit")
     to_unit: str = Field(..., description="Target unit")
+    decimals: int = 2
 
     @field_validator('value')
+    @classmethod
     def value_must_be_positive(cls, v, from_unit):
         if v < 0:
             raise ValueError('Value must be positive')
         return v
 
     @field_validator("from_unit", "to_unit")
+    @classmethod
     def units_must_not_be_empty(cls, v):
         if not v or v.strip() == "":
             raise ValueError('Unit cannot be empty')

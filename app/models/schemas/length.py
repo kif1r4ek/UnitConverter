@@ -1,0 +1,16 @@
+from pydantic import BaseModel, field_validator
+from app.domain.units.length import UNITS_LENGTH_MAPPING
+
+
+class LengthConvertRequest(BaseModel):
+    value: float
+    from_unit: str
+    to_unit: str
+    decimals: int = 2
+
+    @field_validator("from_unit", "to_unit")
+    @classmethod
+    def validate_unit(cls, v: str) -> str:
+        if v not in UNITS_LENGTH_MAPPING:
+            raise ValueError(f"Unsupported unit: {v}")
+        return v

@@ -1,4 +1,4 @@
-from pint import UnitRegistry, DimensionalityError, UndefinedUnitError
+from pint import DimensionalityError, UndefinedUnitError
 from app.dependencies.common import ureg
 from app.domain.units.temperature import UNITS_TEMPERATURE_MAPPING
 
