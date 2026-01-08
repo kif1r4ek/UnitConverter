@@ -1,5 +1,9 @@
 from fastapi import APIRouter, Request
 from app.dependencies.common import templates
+from app.exceptions import UnsupportedUnitError, InvalidValueError
+from app.models.forms import ConversionResponse
+from app.models.schemas.temperature import STemperatureConvertRequest
+from app.services.conversions import convert_temperature
 
 router = APIRouter(
     prefix="/temperature",
@@ -12,3 +16,30 @@ async def get_temperature_page(request: Request):
         "temperature.html",
         {"request": request, "title": "Конвертер температуры"},
     )
+
+
+@router.post("/convert", response_model=ConversionResponse)
+async def convert(request: STemperatureConvertRequest) -> ConversionResponse:
+    """
+    Convert temperature from one unit to another
+
+    Args:
+        request: Validated conversion request
+
+    Returns:
+        ConversionResponse with result
+
+    Raises:
+        HTTPException: If conversion fails
+    """
+    try:
+        result = convert_temperature(value=request.value, from_unit=request.from_unit, to_unit=request.to_unit)
+        return ConversionResponse(
+            result=result,
+            original_value=request.value,
+            from_unit=request.from_unit,
+            to_unit=request.to_unit)
+    except KeyError as e:
+        raise UnsupportedUnitError(str(e))
+    except ValueError as e:
+        raise InvalidValueError(str(e))

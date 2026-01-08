@@ -1,8 +1,9 @@
 from pydantic import BaseModel, field_validator
 from app.domain.units.weight import UNITS_WEIGHT_MAPPING
+from app.models.forms import ConversionRequest
 
 
-class SWeightConvertRequest(BaseModel):
+class SWeightConvertRequest(ConversionRequest):
     value: float
     from_unit: str
     to_unit: str
@@ -14,3 +15,12 @@ class SWeightConvertRequest(BaseModel):
         if v not in UNITS_WEIGHT_MAPPING:
             raise ValueError(f"Unsupported unit: {v}")
         return v
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "value": 1000,
+                "from_unit": "g",
+                "to_unit": "kg"
+            }
+        }

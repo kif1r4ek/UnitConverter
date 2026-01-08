@@ -27,26 +27,18 @@ class ConversionRequest(BaseModel):
 
     @field_validator('value')
     @classmethod
-    def value_must_be_positive(cls, v):
+    def value_must_be_positive(cls, v: float) -> float:
         if v < 0:
             raise ValueError('Value must be positive')
         return v
 
     @field_validator("from_unit", "to_unit")
     @classmethod
-    def units_must_not_be_empty(cls, v):
+    def units_must_not_be_empty(cls, v: str) -> str:
         if not v or v.strip() == "":
             raise ValueError('Unit cannot be empty')
         return v
 
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "value": 100,
-                "from_unit": "m",
-                "to_unit": "km"
-            }
-        }
 
 
 class ConversionResponse(BaseModel):
@@ -64,13 +56,3 @@ class ConversionResponse(BaseModel):
     original_value: float = Field(..., description="Original value")
     from_unit: str = Field(..., description="Current unit")
     to_unit: str = Field(..., description="Target unit")
-
-    class Config:
-        json_schema_extra = {
-            "example": {
-                "result": 0.1,
-                "original_value": 100,
-                "from_unit": "m",
-                "to_unit": "km"
-            }
-        }

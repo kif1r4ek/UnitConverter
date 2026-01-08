@@ -14,3 +14,12 @@ class STemperatureConvertRequest(BaseModel):
         if v not in UNITS_TEMPERATURE_MAPPING:
             raise ValueError(f"Unsupported unit: {v}")
         return v
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "value": 10,
+                "from_unit": "celsius",
+                "to_unit": "kelvin"
+            }
+        }
