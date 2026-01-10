@@ -39,7 +39,5 @@ async def convert(request: STemperatureConvertRequest) -> ConversionResponse:
             original_value=request.value,
             from_unit=request.from_unit,
             to_unit=request.to_unit)
-    except KeyError as e:
-        raise UnsupportedUnitError(str(e))
     except ValueError as e:
         raise InvalidValueError(str(e))

@@ -1,9 +1,9 @@
 from pint import DimensionalityError, UndefinedUnitError
 from app.dependencies.common import ureg
-from app.domain.units.length import UNITS_LENGTH_MAPPING
+from app.domain.units.length import UNITS_LENGTH_MAPPING, UnitsLength
 
 
-def convert_length(value: float, from_unit: str, to_unit: str, decimals: int = 2) -> float:
+def convert_length(value: float, from_unit: UnitsLength, to_unit: UnitsLength, decimals: int = 2) -> float:
     """
         Convert length/area from one unit to another
 
@@ -23,12 +23,6 @@ def convert_length(value: float, from_unit: str, to_unit: str, decimals: int = 2
             convert_length(1000, "m", "km")
             1.0
     """
-
-    if from_unit not in UNITS_LENGTH_MAPPING:
-        raise ValueError(f"Unknown unit: {from_unit}")
-    if to_unit not in UNITS_LENGTH_MAPPING:
-        raise ValueError(f"Unknown unit: {to_unit}")
-
     try:
         from_unit = UNITS_LENGTH_MAPPING[from_unit]
         to_unit = UNITS_LENGTH_MAPPING[to_unit]
@@ -37,6 +31,8 @@ def convert_length(value: float, from_unit: str, to_unit: str, decimals: int = 2
         result = quantity.to(ureg.parse_expression(to_unit))
 
         return round(result.magnitude, decimals)
+    except KeyError as e:
+        raise ValueError(f"Unsupported unit: {e}")
     except (DimensionalityError, UndefinedUnitError) as e:
         raise ValueError(f"Conversion error from {from_unit} to {to_unit}: {str(e)}")
     except Exception as e:

@@ -20,7 +20,6 @@ export class ConverterService {
     }
 
     extractErrorMessage(error) {
-        // FastAPI validation errors
         if (Array.isArray(error.detail)) {
             return error.detail.map(e => e.msg).join(', ');
         }

@@ -12,13 +12,11 @@ export class UnitConverterUI {
         this.cacheElements();
         this.bindEvents();
 
-        // 🔥 ЯВНАЯ очистка при старте UI
         this.cleanupHistory();
         this.renderHistory();
     }
 
     cleanupHistory() {
-        // get() сам проверяет TTL и чистит, если нужно
         this.history.get();
     }
 

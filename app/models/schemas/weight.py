@@ -1,22 +1,14 @@
-from pydantic import BaseModel, field_validator
-from app.domain.units.weight import UNITS_WEIGHT_MAPPING
-from app.models.forms import ConversionRequest
+from pydantic import BaseModel, Field
+from app.domain.units.weight import UnitsWeight
+from app.models.validator import PositiveValueValidator
 
 
-class SWeightConvertRequest(ConversionRequest):
-    value: float
-    from_unit: str
-    to_unit: str
-    decimals: int = 2
-
-    @field_validator("from_unit", "to_unit")
-    @classmethod
-    def validate_unit(cls, v: str) -> str:
-        if v not in UNITS_WEIGHT_MAPPING:
-            raise ValueError(f"Unsupported unit: {v}")
-        return v
+class SWeightConvertRequest(PositiveValueValidator):
+    from_unit: UnitsWeight  = Field(..., description="Current unit")
+    to_unit: UnitsWeight  = Field(..., description="Target unit")
 
     class Config:
+        use_enum_values = True
         json_schema_extra = {
             "example": {
                 "value": 1000,

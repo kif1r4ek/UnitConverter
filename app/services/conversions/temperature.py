@@ -1,9 +1,9 @@
 from pint import DimensionalityError, UndefinedUnitError
 from app.dependencies.common import ureg
-from app.domain.units.temperature import UNITS_TEMPERATURE_MAPPING
+from app.domain.units.temperature import UNITS_TEMPERATURE_MAPPING, UnitsTemperature
 
 
-def convert_temperature(value: float, from_unit: str, to_unit: str, decimals: int = 2) -> float:
+def convert_temperature(value: float, from_unit: UnitsTemperature, to_unit: UnitsTemperature, decimals: int = 2) -> float:
     """
         Convert temperature from one unit to another
 
@@ -23,12 +23,6 @@ def convert_temperature(value: float, from_unit: str, to_unit: str, decimals: in
             convert_temperature(0, "celsius", "fahrenheit")
             32.0
     """
-
-    if from_unit not in UNITS_TEMPERATURE_MAPPING:
-        raise ValueError(f"Unknown unit: {from_unit}")
-    if to_unit not in UNITS_TEMPERATURE_MAPPING:
-        raise ValueError(f"Unknown unit: {to_unit}")
-
     try:
         from_unit = UNITS_TEMPERATURE_MAPPING[from_unit]
         to_unit = UNITS_TEMPERATURE_MAPPING[to_unit]
@@ -37,6 +31,8 @@ def convert_temperature(value: float, from_unit: str, to_unit: str, decimals: in
         result = quantity.to(to_unit)
 
         return round(result.magnitude, decimals)
+    except KeyError as e:
+        raise ValueError(f"Unsupported unit: {e}")
     except (DimensionalityError, UndefinedUnitError) as e:
         raise ValueError(f"Conversion error from {from_unit} to {to_unit}: {str(e)}")
     except Exception as e:
