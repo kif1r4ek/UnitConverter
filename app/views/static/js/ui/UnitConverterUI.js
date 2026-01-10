@@ -11,7 +11,15 @@ export class UnitConverterUI {
 
         this.cacheElements();
         this.bindEvents();
+
+        // 🔥 ЯВНАЯ очистка при старте UI
+        this.cleanupHistory();
         this.renderHistory();
+    }
+
+    cleanupHistory() {
+        // get() сам проверяет TTL и чистит, если нужно
+        this.history.get();
     }
 
     cacheElements() {
@@ -36,7 +44,7 @@ export class UnitConverterUI {
 
         try {
             const value = parseFloat(this.input.value);
-            validateConversionInput(value);
+            validateConversionInput(value, this.type);
 
             const data = {
                 value,
@@ -47,12 +55,14 @@ export class UnitConverterUI {
             const result = await this.service.convert(data);
             this.showResult(result.result);
 
-            this.history.save({
+            const history = this.history.get();
+            history.unshift({
                 ...data,
                 result: result.result,
                 timestamp: new Date().toISOString(),
             });
 
+            this.history.save(history);
             this.renderHistory();
         } catch (err) {
             this.showError(err.message);
