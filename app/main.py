@@ -3,10 +3,10 @@ from fastapi import FastAPI
 
 from fastapi.staticfiles import StaticFiles
 
-from app.controllers.pages.controller_pages import router as pages
-from app.controllers.length.controller_length import router as length
-from app.controllers.temperature.controller_temperature import router as temperature
-from app.controllers.weight.controller_weight import router as weight
+from app.api.controller_pages import router as pages
+from app.api.controller_length import router as length
+from app.api.controller_temperature import router as temperature
+from app.api.controller_weight import router as weight
 from app.core.error_handlers import register_exception_handlers
 
 app = FastAPI()
