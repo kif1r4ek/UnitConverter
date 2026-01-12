@@ -1,7 +1,11 @@
 from pint import DimensionalityError, UndefinedUnitError
 from app.dependencies.common import ureg
 from app.domain.units.temperature import UNITS_TEMPERATURE_MAPPING, UnitsTemperature
-
+from app.exceptions import (
+    UnsupportedUnitError,
+    DimensionalityConversionError,
+    ConversionError
+)
 
 def convert_temperature(value: float, from_unit: UnitsTemperature, to_unit: UnitsTemperature, decimals: int = 2) -> float:
     """
@@ -32,12 +36,14 @@ def convert_temperature(value: float, from_unit: UnitsTemperature, to_unit: Unit
 
         return round(result.magnitude, decimals)
     except KeyError as e:
-        raise ValueError(f"Unsupported unit: {e}")
-    except (DimensionalityError, UndefinedUnitError) as e:
-        raise ValueError(f"Conversion error from {from_unit} to {to_unit}: {str(e)}")
+        raise UnsupportedUnitError(str(e))
+    except DimensionalityError as e:
+        raise DimensionalityConversionError(from_unit, to_unit)
+    except UndefinedUnitError as e:
+        raise UnsupportedUnitError(str(e))
     except Exception as e:
         # Позже здесь будет logger
-        raise ValueError(f"Unexpected error during conversion: {str(e)}")
+        raise ConversionError(f"Unexpected error during temperature conversion: {str(e)}")
 
 
 

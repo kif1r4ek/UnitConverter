@@ -1,7 +1,11 @@
 from pint import DimensionalityError, UndefinedUnitError
 from app.dependencies.common import ureg
 from app.domain.units.weight import UNITS_WEIGHT_MAPPING, UnitsWeight
-
+from app.exceptions import (
+    UnsupportedUnitError,
+    DimensionalityConversionError,
+    ConversionError
+)
 
 def convert_weight(value: float, from_unit: UnitsWeight, to_unit: UnitsWeight, decimals: int = 2) -> float:
     """
@@ -32,9 +36,11 @@ def convert_weight(value: float, from_unit: UnitsWeight, to_unit: UnitsWeight, d
 
         return round(result.magnitude, decimals)
     except KeyError as e:
-        raise ValueError(f"Unsupported unit: {e}")
-    except (DimensionalityError, UndefinedUnitError) as e:
-        raise ValueError(f"Conversion error from {from_unit} to {to_unit}: {str(e)}")
+        raise UnsupportedUnitError(str(e))
+    except DimensionalityError as e:
+        raise DimensionalityConversionError(from_unit, to_unit)
+    except UndefinedUnitError as e:
+        raise UnsupportedUnitError(str(e))
     except Exception as e:
         # Позже здесь будет logger
-        raise ValueError(f"Unexpected error during conversion: {str(e)}")
+        raise ConversionError(f"Unexpected error during weight conversion: {str(e)}")

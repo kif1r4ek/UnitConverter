@@ -1,91 +1,74 @@
-from fastapi import HTTPException, status
+"""
+Custom exceptions for unit conversion application.
 
-from typing import Optional
+This module defines domain-specific exceptions that are raised
+when conversion operations fail due to invalid input or unsupported units.
+"""
 
 
 class ConversionError(Exception):
     """
     Base exception for all conversion-related errors.
 
-    Attributes:
-        message: Human-readable error message
-        from_unit: Source unit (optional)
-        to_unit: Target unit (optional)
-        value: Original value (optional)
+    Use this as a parent class for specific conversion errors,
+    or raise it directly when you need a generic conversion error.
+
+    Example:
+        raise ConversionError("Cannot convert negative temperature to Kelvin")
     """
-
-    def __init__(
-        self,
-        message: str,
-        *,
-        from_unit: Optional[str] = None,
-        to_unit: Optional[str] = None,
-        value: Optional[float] = None,
-    ) -> None:
-        self.message = message
-        self.from_unit = from_unit
-        self.to_unit = to_unit
-        self.value = value
-        super().__init__(message)
-
-    def __str__(self) -> str:
-        details = [self.message]
-
-        if self.value is not None:
-            details.append(f"value={self.value}")
-        if self.from_unit:
-            details.append(f"from={self.from_unit}")
-        if self.to_unit:
-            details.append(f"to={self.to_unit}")
-
-        return " | ".join(details)
+    pass
 
 
 class UnsupportedUnitError(ConversionError):
     """
-    Raised when a unit is not supported by the converter.
+    Raised when trying to use a unit that is not supported.
+
+    Example:
+        raise UnsupportedUnitError("parsec")
     """
 
-    def __init__(
-        self,
-        unit: str,
-        *,
-        from_unit: Optional[str] = None,
-        to_unit: Optional[str] = None,
-    ) -> None:
-        super().__init__(
-            message=f"Unsupported unit: {unit}",
-            from_unit=from_unit,
-            to_unit=to_unit,
-        )
+    def __init__(self, unit: str):
         self.unit = unit
+        super().__init__(f"Unsupported unit: '{unit}'")
 
 
 class InvalidValueError(ConversionError):
     """
-    Raised when the provided value is invalid for conversion.
+    Raised when the input value is invalid for conversion.
+
+    Examples:
+        raise InvalidValueError("Value cannot be negative for weight")
+        raise InvalidValueError("Value must be a number")
+    """
+    pass
+
+
+class DimensionalityConversionError(ConversionError):
+    """
+    Raised when trying to convert between incompatible dimensions.
+
+    For example: meters to degrees, kilograms to liters.
+
+    Example:
+        raise DimensionalityConversionError("m", "degC")
     """
 
-    def __init__(self, value: float, reason: Optional[str] = None) -> None:
-        message = "Invalid value"
-        if reason:
-            message += f": {reason}"
-
+    def __init__(self, from_unit: str, to_unit: str):
+        self.from_unit = from_unit
+        self.to_unit = to_unit
         super().__init__(
-            message=message,
-            value=value,
+            f"Cannot convert between incompatible units: '{from_unit}' to '{to_unit}'"
         )
-        self.reason = reason
-
-def http_400(detail: str) -> HTTPException:
-    return HTTPException(
-        status_code=status.HTTP_400_BAD_REQUEST,
-        detail=detail
-    )
 
 
-def http_500(detail: str = "Internal server error") -> HTTPException:
-    return HTTPException(
-        status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        detail=detail
-    )
+class NegativeValueError(InvalidValueError):
+    """
+    Raised when a negative value is provided where only positive values are allowed.
+
+    Example:
+        raise NegativeValueError("weight")
+    """
+
+    def __init__(self, unit_type: str):
+        self.unit_type = unit_type
+        super().__init__(f"Negative values are not allowed for {unit_type}")

@@ -1,6 +1,5 @@
 from fastapi import APIRouter, Request
 from app.dependencies.common import templates
-from app.exceptions import UnsupportedUnitError, InvalidValueError
 from app.models.forms import ConversionResponse
 from app.models.schemas.weight import SWeightConvertRequest
 from app.services.conversions import convert_weight
@@ -28,18 +27,10 @@ async def convert(request: SWeightConvertRequest) -> ConversionResponse:
 
     Returns:
         ConversionResponse with result
-
-    Raises:
-        HTTPException: If conversion fails
     """
-    try:
-        result = convert_weight(value=request.value, from_unit=request.from_unit, to_unit=request.to_unit)
-        return ConversionResponse(
-            result=result,
-            original_value=request.value,
-            from_unit=request.from_unit,
-            to_unit=request.to_unit)
-    except KeyError as e:
-        raise UnsupportedUnitError(str(e))
-    except ValueError as e:
-        raise InvalidValueError(str(e))
+    result = convert_weight(value=request.value, from_unit=request.from_unit, to_unit=request.to_unit)
+    return ConversionResponse(
+        result=result,
+        original_value=request.value,
+        from_unit=request.from_unit,
+        to_unit=request.to_unit)

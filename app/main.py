@@ -7,8 +7,11 @@ from app.controllers.pages.controller_pages import router as pages
 from app.controllers.length.controller_length import router as length
 from app.controllers.temperature.controller_temperature import router as temperature
 from app.controllers.weight.controller_weight import router as weight
+from app.core.error_handlers import register_exception_handlers
 
 app = FastAPI()
+
+register_exception_handlers(app)
 
 app.mount("/static", StaticFiles(directory="app/views/static"), name="static")
 
