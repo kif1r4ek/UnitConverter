@@ -1,6 +1,6 @@
 from pydantic import field_validator
 
-from app.exceptions import NegativeValueError
+from app.domain.exceptions import NegativeValueError
 from app.models.forms import ConversionRequest
 
 

@@ -14,12 +14,8 @@ from fastapi import Request, status
 from fastapi.responses import JSONResponse
 from pydantic import ValidationError
 
-from app.exceptions import (
+from app.domain.exceptions import (
     ConversionError,
-    UnsupportedUnitError,
-    InvalidValueError,
-    DimensionalityConversionError,
-    NegativeValueError,
 )
 
 

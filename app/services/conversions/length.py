@@ -1,7 +1,7 @@
 from pint import DimensionalityError, UndefinedUnitError
 from app.dependencies.common import ureg
 from app.domain.units.length import UNITS_LENGTH_MAPPING, UnitsLength
-from app.exceptions import (
+from app.domain.exceptions import (
     UnsupportedUnitError,
     DimensionalityConversionError,
     ConversionError
