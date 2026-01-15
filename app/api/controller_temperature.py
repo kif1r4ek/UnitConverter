@@ -1,9 +1,14 @@
 from fastapi import APIRouter, Request
+
+from app.core.logger import get_logger
 from app.dependencies.common import templates
+from app.domain.exceptions import ConversionError
 from app.domain.models.forms import ConversionResponse
 from app.domain.models.schemas.temperature import STemperatureConvertRequest
 from app.services import convert_temperature
 
+
+logger = get_logger(__name__)
 router = APIRouter(
     prefix="/temperature",
     tags=["temperature"],
@@ -11,6 +16,7 @@ router = APIRouter(
 
 @router.get("")
 async def get_temperature_page(request: Request):
+    logger.debug("temperature_page_requested", client=request.client.host)
     return templates.TemplateResponse(
         "temperature.html",
         {"request": request, "title": "Конвертер температуры"},
@@ -28,9 +34,40 @@ async def convert(request: STemperatureConvertRequest) -> ConversionResponse:
     Returns:
         ConversionResponse with result
     """
-    result = convert_temperature(value=request.value, from_unit=request.from_unit, to_unit=request.to_unit)
-    return ConversionResponse(
-        result=result,
-        original_value=request.value,
+    logger.info(
+        "conversion_requested",
+        converter_type="temperature",
+        value=request.value,
         from_unit=request.from_unit,
-        to_unit=request.to_unit)
+        to_unit=request.to_unit
+    )
+
+    try:
+        result = convert_temperature(value=request.value, from_unit=request.from_unit, to_unit=request.to_unit)
+
+        logger.info(
+            "conversion_success",
+            converter_type="temperature",
+            value=request.value,
+            from_unit=request.from_unit,
+            to_unit=request.to_unit,
+            result=result
+        )
+
+        return ConversionResponse(
+            result=result,
+            original_value=request.value,
+            from_unit=request.from_unit,
+            to_unit=request.to_unit)
+    except Exception as e:
+
+        logger.error(
+            "conversion_failed",
+            converter_type="temperature",
+            value=request.value,
+            from_unit=request.from_unit,
+            to_unit=request.to_unit,
+            error=str(e),
+            exc_info=True
+        )
+        raise ConversionError(str(e))
