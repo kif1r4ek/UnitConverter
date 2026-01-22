@@ -6,7 +6,7 @@ export class ConverterService {
     async convert(payload) {
         const response = await fetch(this.url, {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(payload),
         });
 

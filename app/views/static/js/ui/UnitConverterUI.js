@@ -1,23 +1,18 @@
 import { validateConversionInput } from '../core/Validator.js';
 import { ConverterService } from '../core/ConverterService.js';
-import { HistoryStorage } from '../core/HistoryStorage.js';
+import { HistoryService } from '../core/HistoryService.js';
 import { formatRelativeDate } from '../utils/date.js';
 
 export class UnitConverterUI {
     constructor(type) {
         this.type = type;
         this.service = new ConverterService(type);
-        this.history = new HistoryStorage(`${type}_history`);
+        this.history = new HistoryService(type);
 
         this.cacheElements();
         this.bindEvents();
 
-        this.cleanupHistory();
-        this.renderHistory();
-    }
-
-    cleanupHistory() {
-        this.history.get();
+        this.loadHistory();
     }
 
     cacheElements() {
@@ -28,6 +23,7 @@ export class UnitConverterUI {
         this.result = document.getElementById('resultValue');
         this.swapBtn = document.getElementById('swapBtn');
         this.historyList = document.getElementById('historyList');
+        this.clearHistoryBtn = document.getElementById('clearHistory');
     }
 
     bindEvents() {
@@ -35,6 +31,7 @@ export class UnitConverterUI {
 
         this.form.addEventListener('submit', e => this.submit(e));
         this.swapBtn?.addEventListener('click', e => this.swap(e));
+        this.clearHistoryBtn?.addEventListener('click', e => this.clearHistory(e));
     }
 
     async submit(e) {
@@ -53,17 +50,35 @@ export class UnitConverterUI {
             const result = await this.service.convert(data);
             this.showResult(result.result);
 
-            const history = this.history.get();
-            history.unshift({
-                ...data,
-                result: result.result,
-                timestamp: new Date().toISOString(),
-            });
+            await this.loadHistory();
 
-            this.history.save(history);
-            this.renderHistory();
         } catch (err) {
             this.showError(err.message);
+        }
+    }
+
+    async loadHistory() {
+        if (!this.historyList) return;
+
+        try {
+            const history = await this.history.fetchHistory();
+            this.renderHistory(history);
+        } catch (error) {
+            console.error('Failed to load history:', error);
+        }
+    }
+
+    async clearHistory(e) {
+        e?.preventDefault();
+
+        if (!confirm('Are you sure you want to clear all history?')) {
+            return;
+        }
+
+        const success = await this.history.clearHistory();
+
+        if (success) {
+            this.renderHistory([]);
         }
     }
 
@@ -95,20 +110,21 @@ export class UnitConverterUI {
         }
     }
 
-    renderHistory() {
+    renderHistory(history) {
         if (!this.historyList) return;
 
-        const history = this.history.get();
         if (!history.length) {
-            this.historyList.innerHTML = 'No history yet';
+            this.historyList.innerHTML = '<div class="history-empty">No conversion history yet</div>';
             return;
         }
 
         this.historyList.innerHTML = history.map(h => `
-            <div>
-                <strong>${h.value} ${h.from_unit}</strong>
-                → ${h.result} ${h.to_unit}
-                <small>${formatRelativeDate(h.timestamp)}</small>
+            <div class="history-item">
+                <div>
+                    <strong>${h.value} ${h.from_unit}</strong>
+                    → <strong>${h.result} ${h.to_unit}</strong>
+                </div>
+                <small class="text-muted">${h.created_at_human}</small>
             </div>
         `).join('');
     }

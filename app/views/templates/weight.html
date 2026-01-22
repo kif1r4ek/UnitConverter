@@ -114,15 +114,22 @@
         </div>
     </div>
 
-    <!-- History Section -->
-    <div class="history-section">
-        <div class="history-title">
-            <i class="bi bi-clock-history"></i>
-            Recent Conversions
-        </div>
-        <div id="historyList" class="history-list">
-            <div class="history-empty">No conversion history yet</div>
-        </div>
-    </div>
+	<!-- History Section -->
+	<div class="history-section">
+	    <div class="history-title">
+	        <i class="bi bi-clock-history"></i>
+	        Recent Conversions
+	        <button
+	            id="clearHistory"
+	            class="btn btn-sm btn-outline-danger ms-auto"
+	            title="Clear all history"
+	        >
+	            <i class="bi bi-trash"></i> Clear
+	        </button>
+	    </div>
+	    <div id="historyList" class="history-list">
+	        <div class="history-empty">Loading...</div>
+	    </div>
+	</div>
 </div>
 {% endblock %}

@@ -1,3 +1,5 @@
+from contextlib import asynccontextmanager
+
 import uvicorn
 from fastapi import FastAPI
 
@@ -11,13 +13,48 @@ from app.core.config import settings
 from app.core.error_handlers import register_exception_handlers
 from app.core.logger import configure_logger, get_logger
 from app.core.middleware import LoggingMiddleware
+from app.dependencies.common import logger
+from app.core.redis import redis_manager
 
 configure_logger()
-logger = get_logger(__name__)
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """
+    Lifecycle manager for FastAPI application.
+
+    Handles startup and shutdown events:
+    - Connect to Redis on startup
+    - Disconnect from Redis on shutdown
+    """
+    logger.info("application_startup_initiated")
+
+    try:
+        await redis_manager.connect()
+        logger.info("redis_initialized")
+    except Exception as e:
+        logger.error("redis_initialization_failed", error=str(e))
+        raise
+
+    logger.info(
+        "application_started",
+        app_name=settings.PROJECT_NAME,
+        version=settings.PROJECT_VERSION,
+        debug=settings.DEBUG,
+    )
+
+    yield
+
+    logger.info("application_shutdown_initiated")
+    await redis_manager.disconnect()
+    logger.info("application_shutdown_complete")
+
+
 app = FastAPI(
     title=settings.PROJECT_NAME,
     version=settings.PROJECT_VERSION,
     debug=settings.DEBUG,
+    lifespan=lifespan,
 )
 
 app.add_middleware(LoggingMiddleware)
@@ -31,18 +68,13 @@ app.include_router(length)
 app.include_router(temperature)
 app.include_router(weight)
 
-@app.on_event("startup")
-async def startup_event():
-    logger.info(
-        "application_started",
-        app_name=settings.PROJECT_NAME,
-        version=settings.PROJECT_VERSION,
-        debug=settings.DEBUG,
-    )
+@app.get("/health", include_in_schema=False)
+async def health():
+    redis_ok = await redis_manager.health_check()
+    return {
+        "status": "ok",
+        "redis": redis_ok,
+    }
 
-@app.on_event("shutdown")
-async def shutdown_event():
-    logger.info("application_shutdown")
-
-if __name__ == "__main__":
-    uvicorn.run("app.main:app", reload=True, host=settings.HOST, port=settings.PORT)
+# if __name__ == "__main__":
+#      uvicorn.run("app.main:app", reload=True, host=settings.HOST, port=settings.PORT)
