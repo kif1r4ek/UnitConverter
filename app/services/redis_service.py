@@ -103,11 +103,9 @@ class RedisService:
             for item in items:
                 data = json.loads(item)
 
-                # Если нет created_at, добавляем текущее время
                 if "created_at" not in data:
                     data["created_at"] = datetime.now(timezone.utc).isoformat()
 
-                # Генерируем поле created_at_human
                 data["created_at_human"] = format_relative_time(data["created_at"])
 
                 history.append(data)
