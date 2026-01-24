@@ -1,9 +1,10 @@
 from fastapi import APIRouter, Request, Depends, Header
+from fastapi.responses import JSONResponse
 from redis.asyncio import Redis
 
 from app.core.config import settings
 from app.core.redis import get_redis
-from app.dependencies.common import templates, logger, get_user_key
+from app.dependencies.common import templates, logger, get_user_key, get_or_create_session
 from app.domain.exceptions import ConversionError
 from app.domain.models.forms import ConversionResponse
 from app.domain.models.schemas.weight import SWeightConvertRequest
@@ -67,7 +68,7 @@ async def convert(
             to_unit=payload.to_unit
         )
 
-        user_key = get_user_key(request)
+        user_key, session_id, is_new = get_or_create_session(request)
 
         redis_service = RedisService(redis)
         await redis_service.add_to_history(
@@ -118,7 +119,7 @@ async def get_history(
 ):
     """Get conversion history from Redis."""
 
-    user_key = get_user_key(request)
+    user_key, session_id, is_new = get_or_create_session(request)
     redis_service = RedisService(redis)
 
     history = await redis_service.get_history(
@@ -136,7 +137,7 @@ async def clear_history(
 ):
     """Clear conversion history."""
 
-    user_key = get_user_key(request)
+    user_key, session_id, is_new = get_or_create_session(request)
     redis_service = RedisService(redis)
 
     await redis_service.clear_history(

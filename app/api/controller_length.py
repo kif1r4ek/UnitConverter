@@ -1,10 +1,11 @@
 from fastapi import APIRouter, Request, Depends, Header
+from fastapi.responses import JSONResponse
 from redis.asyncio import Redis
 
 from app.core.config import settings
 from app.core.logger import get_logger
 from app.core.redis import get_redis
-from app.dependencies.common import templates, logger, get_user_key
+from app.dependencies.common import templates, logger, get_user_key, get_or_create_session
 from app.domain.exceptions import ConversionError
 from app.domain.models.forms import ConversionResponse
 from app.domain.models.schemas.length import SLengthConvertRequest
@@ -72,7 +73,7 @@ async def convert(
     try:
         result = convert_length(value=pyload.value, from_unit=pyload.from_unit, to_unit=pyload.to_unit)
 
-        user_key = get_user_key(request)
+        user_key, session_id, is_new = get_or_create_session(request)
 
         redis_service = RedisService(redis)
         await redis_service.add_to_history(
@@ -96,11 +97,24 @@ async def convert(
             result=result
         )
 
-        return ConversionResponse(
+        response_data = ConversionResponse(
             result=result,
             original_value=pyload.value,
             from_unit=pyload.from_unit,
-            to_unit=pyload.to_unit)
+            to_unit=pyload.to_unit
+        )
+
+        response = JSONResponse(content=response_data.dict())
+        if is_new:
+            response.set_cookie(
+                key="session_id",
+                value=session_id,
+                max_age=30 * 24 * 60 * 60,  # 30 days
+                httponly=True,
+                samesite="lax"
+            )
+
+        return response
 
     except Exception as e:
         logger.error(
