@@ -1,0 +1,40 @@
+.page-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 0.5rem;
+}
+
+.page-title i {
+    color: var(--accent-blue);
+}
+
+.page-subtitle {
+    font-size: 1.1rem;
+    color: rgba(45, 62, 68, 0.7);
+}
+
+/* Info Section */
+.info-section {
+    background: rgba(33, 150, 243, 0.1);
+    padding: 1.5rem;
+    border-radius: var(--radius-md);
+    margin-top: 2rem;
+    border-left: 4px solid var(--accent-blue);
+}
+
+.info-section h5 {
+    font-weight: 600;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+}
+
+.info-section ul {
+    margin: 0;
+    padding-left: 1.5rem;
+}
+
+.info-section li {
+	margin-bottom: 0.5rem;
+	color: rgba(45, 62, 68, 0.8);
+}

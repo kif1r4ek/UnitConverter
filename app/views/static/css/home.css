@@ -1,0 +1,221 @@
+.hero-section {
+	padding: 3rem 0;
+	margin-bottom: 2rem;
+}
+
+.hero-content {
+	max-width: 800px;
+	margin: 0 auto;
+}
+
+.hero-title {
+	font-size: 3rem;
+	font-weight: 700;
+	color: var(--text-dark);
+	margin-bottom: 1rem;
+}
+
+.hero-title i {
+	color: var(--accent-blue);
+}
+
+.hero-subtitle {
+	font-size: 1.5rem;
+	color: var(--text-dark);
+	margin-bottom: 1rem;
+	font-weight: 500;
+}
+
+/* Converter Cards */
+.converter-cards {
+	margin-bottom: 3rem;
+}
+
+.converter-card {
+	background: rgba(255, 255, 255, 0.95);
+	border: none;
+	border-radius: var(--radius-lg);
+	box-shadow: 0 4px 15px var(--shadow);
+	transition: all 0.3s ease;
+	text-decoration: none;
+	color: inherit;
+	display: block;
+	width: 100%;
+}
+
+.converter-card:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.card-icon {
+	font-size: 4rem;
+	color: var(--accent-blue);
+	margin-bottom: 1rem;
+	transition: all 0.3s ease;
+}
+
+.converter-card:hover .card-icon {
+	transform: scale(1.1);
+	color: var(--accent-orange);
+}
+
+.card-title {
+	font-size: 1.8rem;
+	font-weight: 600;
+	margin-bottom: 1rem;
+	color: var(--text-dark);
+}
+
+.card-description {
+	color: rgba(45, 62, 68, 0.7);
+	margin-bottom: 1rem;
+	font-size: 0.95rem;
+	line-height: 1.5;
+}
+
+.card-examples {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	justify-content: center;
+	margin-bottom: 1rem;
+}
+
+.card-examples .badge {
+	background: var(--input-bg);
+	color: var(--text-dark);
+	font-weight: 500;
+	padding: 0.4rem 0.8rem;
+	border-radius: var(--radius-sm);
+}
+
+.card-arrow {
+	font-size: 1.5rem;
+	color: var(--accent-blue);
+	opacity: 0;
+	transition: all 0.3s ease;
+}
+
+.converter-card:hover .card-arrow {
+	opacity: 1;
+	transform: translateX(5px);
+}
+
+/* Features Section */
+.feature-section {
+	padding: 3rem 0;
+	margin-bottom: 2rem;
+}
+
+.feature-item {
+	padding: 2rem;
+	margin-bottom: 1rem;
+	background: rgba(255, 255, 255, 0.95);
+	border: none;
+	border-radius: var(--radius-lg);
+	box-shadow: 0 4px 15px var(--shadow);
+	transition: all 0.3s ease;
+	text-decoration: none;
+	color: inherit;
+	display: block;
+	width: 100%;
+}
+
+.feature-item:hover {
+	transform: translateY(-10px);
+	box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+}
+
+.feature-icon {
+	font-size: 3rem;
+	color: var(--accent-blue);
+	margin-bottom: 1rem;
+	transition: all 0.3s ease;
+}
+
+.feature-item:hover .feature-icon {
+	transform: scale(1.1);
+	color: var(--accent-orange);
+}
+
+.feature-icon h4 {
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+	color: var(--text-dark);
+}
+
+.feature-item p {
+	color: rgba(45, 62, 68, 0.7);
+    font-size: 0.95rem;
+}
+
+/* How to Use Section */
+.how-to-use {
+	background: rgba(255, 255, 255, 0.95);
+	padding: 3rem 2rem;
+	border-radius: var(--radius-lg);
+	margin-bottom: 2rem;
+	box-shadow: 0 4px 15px var(--shadow);
+}
+
+.how-to-use h2 {
+	font-weight: 700;
+	color: var(--text-dark);
+}
+
+.how-to-use span {
+	color: var(--accent-orange);
+}
+
+.step-number {
+	width: 60px;
+	height: 60px;
+	background: var(--accent-blue);
+	color: white;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 1.5rem;
+	font-weight: 700;
+	margin: 0 auto 1rem;
+	box-shadow: 0 4px 10px rgba(33, 150, 243, 0.3);
+}
+
+.how-to-use h5 {
+	font-weight: 600;
+	margin-bottom: 0.5rem;
+	color: var(--text-dark);
+}
+
+.how-to-use p {
+	color: rgba(45, 62, 68, 0.7);
+	font-size: 0.95rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+	.hero-title {
+		font-size: 2rem;
+	}
+	
+	.hero-subtitle {
+		font-size: 1.2rem;
+	}
+	
+	.converter-cards {
+		margin-bottom: 1rem;
+	}
+}
+
+
+
+
+
+
+
+
+
+
+

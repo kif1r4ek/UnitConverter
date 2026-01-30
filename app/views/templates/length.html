@@ -1,10 +1,124 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Length Converter - Unit Converter{% endblock %}
+
+{% block active_length %}active{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='css/length.css') }}">
+{% endblock %}
+
+{% block content %}
+
+<div class="converter-container">
+
+	<!-- Page Title -->
+	<div class="text-center mb-4">
+		<h1 class="page-title">
+			<i class="bi bi-rulers"></i>
+            Length Converter
+		</h1>
+		<p class="page-subtitle">Convert between different units of length and area</p>
+	</div>
+
+	<!-- Converter Form -->
+	<div class="converter-form">
+		<form id="lengthForm">
+
+			<!-- From Unit -->
+			<div class="mb-3">
+				<label for="fromUnit" class="form-label">From</label>
+				<select name="fromUnit" id="fromUnit" class="form-select">
+					<optgroup label="Length">
+                        <option value="mm">Millimeter (mm)</option>
+                        <option value="cm">Centimeter (cm)</option>
+                        <option value="m" selected>Meter (m)</option>
+                        <option value="km">Kilometer (km)</option>
+                        <option value="inch">Inch (in)</option>
+                        <option value="foot">Foot (ft)</option>
+                        <option value="yard">Yard (yd)</option>
+                        <option value="mile">Mile (mi)</option>
+                    </optgroup>
+                    <optgroup label="Area">
+                        <option value="m2">Square Meter (m²)</option>
+                        <option value="km2">Square Kilometer (km²)</option>
+                        <option value="hectare">Hectare (ha)</option>
+                        <option value="acre">Acre (ac)</option>
+                        <option value="sqft">Square Foot (ft²)</option>
+                    </optgroup>
+				</select>
+			</div>
+
+			<!-- Input -->
+			<div class="mb-3">
+				<label for="inputValue" class="form-label">Value</label>
+				<input type="number" class="form-control" id="inputValue" name="inputValue"
+                       placeholder="Enter value" step="any" required>
+			</div>
+
+			<!-- Swap Button -->
+			<div class="text-centre mb-3">
+				<button class="btn-swap" type="button" id="swapBtn" title="Swap units">
+					<i class="bi bi-arrow-down-up"></i>
+				</button>
+			</div>
+
+			<!-- To Unit -->
+			<div class="mb-3">
+                <label for="toUnit" class="form-label">To</label>
+                <select class="form-select" id="toUnit" name="toUnit">
+                    <optgroup label="Length">
+                        <option value="mm">Millimeter (mm)</option>
+                        <option value="cm">Centimeter (cm)</option>
+                        <option value="m">Meter (m)</option>
+                        <option value="km" selected>Kilometer (km)</option>
+                        <option value="inch">Inch (in)</option>
+                        <option value="foot">Foot (ft)</option>
+                        <option value="yard">Yard (yd)</option>
+                        <option value="mile">Mile (mi)</option>
+                    </optgroup>
+                    <optgroup label="Area">
+                        <option value="m2">Square Meter (m²)</option>
+                        <option value="km2">Square Kilometer (km²)</option>
+                        <option value="hectare">Hectare (ha)</option>
+                        <option value="acre">Acre</option>
+                        <option value="sqft">Square Foot (ft²)</option>
+                    </optgroup>
+                </select>
+            </div>
+
+			<!-- Result -->
+			<div class="mb-3">
+				<label for="resultValue" class="form-label">Result</label>
+                <input type="text" class="form-control" id="resultValue" name="resultValue"
+                       placeholder="Result will appear here" readonly>
+			</div>
+
+			<!-- Convert Button -->
+            <button type="submit" class="btn-convert" id="convertBtn">
+                <i class="bi bi-arrow-repeat"></i>
+                Convert
+            </button>
+		</form>
+	</div>
+
+	<!-- History Section -->
+	<div class="history-section">
+	    <div class="history-title">
+	        <i class="bi bi-clock-history"></i>
+	        Recent Conversions
+	        <button
+	            id="clearHistory"
+	            class="btn btn-sm btn-outline-danger ms-auto"
+	            title="Clear all history"
+	        >
+	            <i class="bi bi-trash"></i> Clear
+	        </button>
+	    </div>
+	    <div id="historyList" class="history-list">
+	        <div class="history-empty">Loading...</div>
+	    </div>
+	</div>
+</div>
+
+{% endblock %}

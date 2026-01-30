@@ -1,10 +1,135 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-	<meta charset="UTF-8">
-	<title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}Weight Converter - Unit Converter{% endblock %}
+
+{% block active_weight %}active{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{{ url_for('static', path='css/weight.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="converter-container">
+
+    <!-- Page Title -->
+    <div class="text-center mb-4">
+        <h1 class="page-title">
+            <i class="bi bi-box-seam"></i>
+            Weight Converter
+        </h1>
+        <p class="page-subtitle">Convert between different units of weight and mass</p>
+    </div>
+
+    <!-- Converter Form -->
+    <div class="converter-form">
+        <form id="weightForm">
+
+            <!-- From Unit -->
+            <div class="mb-3">
+                <label for="fromUnit" class="form-label">From</label>
+                <select class="form-select" id="fromUnit" name="fromUnit">
+                    <optgroup label="Metric">
+                        <option value="mg">Milligram (mg)</option>
+                        <option value="g">Gram (g)</option>
+                        <option value="kg" selected>Kilogram (kg)</option>
+                        <option value="ton">Metric Ton (t)</option>
+                    </optgroup>
+                    <optgroup label="Imperial">
+                        <option value="oz">Ounce (oz)</option>
+                        <option value="lb">Pound (lb)</option>
+                        <option value="stone">Stone (st)</option>
+                        <option value="ton_us">US Ton</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <!-- Input Value -->
+            <div class="mb-3">
+                <label for="inputValue" class="form-label">Value</label>
+                <input type="number" class="form-control" id="inputValue" name="inputValue"
+                       placeholder="Enter weight" step="any" required>
+            </div>
+
+            <!-- Swap Button -->
+            <div class="text-center mb-3">
+                <button type="button" class="btn-swap" id="swapBtn" title="Swap units">
+                    <i class="bi bi-arrow-down-up"></i>
+                </button>
+            </div>
+
+            <!-- To Unit -->
+            <div class="mb-3">
+                <label for="toUnit" class="form-label">To</label>
+                <select class="form-select" id="toUnit" name="toUnit">
+                    <optgroup label="Metric">
+                        <option value="mg">Milligram (mg)</option>
+                        <option value="g">Gram (g)</option>
+                        <option value="kg">Kilogram (kg)</option>
+                        <option value="ton">Metric Ton (t)</option>
+                    </optgroup>
+                    <optgroup label="Imperial">
+                        <option value="oz">Ounce (oz)</option>
+                        <option value="lb" selected>Pound (lb)</option>
+                        <option value="stone">Stone (st)</option>
+                        <option value="ton_us">US Ton</option>
+                    </optgroup>
+                </select>
+            </div>
+
+            <!-- Result -->
+            <div class="mb-3">
+                <label for="resultValue" class="form-label">Result</label>
+                <input type="text" class="form-control" id="resultValue" name="resultValue"
+                       placeholder="Result will appear here" readonly>
+            </div>
+
+            <!-- Convert Button -->
+            <button type="submit" class="btn-convert" id="convertBtn">
+                <i class="bi bi-arrow-repeat"></i>
+                Convert
+            </button>
+        </form>
+    </div>
+
+    <!-- Weight Info -->
+    <div class="info-section">
+        <h5><i class="bi bi-lightbulb"></i> Weight Info</h5>
+        <div class="row">
+            <div class="col-md-6">
+                <p><strong>Common conversions:</strong></p>
+                <ul>
+                    <li>1 kg = 1000 g</li>
+                    <li>1 kg ≈ 2.205 lb</li>
+                    <li>1 lb ≈ 453.6 g</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <p><strong>Did you know?</strong></p>
+                <ul>
+                    <li>1 stone = 14 pounds</li>
+                    <li>1 metric ton = 1000 kg</li>
+                    <li>1 oz ≈ 28.35 g</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+	<!-- History Section -->
+	<div class="history-section">
+	    <div class="history-title">
+	        <i class="bi bi-clock-history"></i>
+	        Recent Conversions
+	        <button
+	            id="clearHistory"
+	            class="btn btn-sm btn-outline-danger ms-auto"
+	            title="Clear all history"
+	        >
+	            <i class="bi bi-trash"></i> Clear
+	        </button>
+	    </div>
+	    <div id="historyList" class="history-list">
+	        <div class="history-empty">Loading...</div>
+	    </div>
+	</div>
+</div>
+{% endblock %}
