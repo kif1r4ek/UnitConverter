@@ -3,10 +3,11 @@ Pytest configuration and shared fixtures for the test suite.
 """
 import asyncio
 import pytest
-from typing import AsyncGenerator, Generator
+from typing import AsyncGenerator, Generator, Any
 from unittest.mock import AsyncMock, MagicMock, patch
 from fastapi.testclient import TestClient
 from redis.asyncio import Redis
+from starlette.testclient import TestClient
 
 from app.main import app
 from app.core.redis import RedisManager
@@ -79,7 +80,7 @@ async def mock_redis_manager(mock_redis: AsyncMock) -> AsyncGenerator[RedisManag
 
 
 @pytest.fixture
-def client(mock_redis) -> TestClient:
+def client(mock_redis) -> Generator[TestClient, Any, None]:
     """
     Create FastAPI test client with mocked Redis.
 

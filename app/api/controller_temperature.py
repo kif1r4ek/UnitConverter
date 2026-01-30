@@ -34,7 +34,7 @@ async def get_temperature_page(request: Request):
         response.set_cookie(
             key="session_id",
             value=str(uuid.uuid4()),
-            max_age=settings.HISTORY_TTL * 30,  # 30 дней
+            max_age=settings.HISTORY_TTL,
             httponly=True,
             samesite="lax"
         )

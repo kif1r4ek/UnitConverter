@@ -32,7 +32,7 @@ async def get_length_page(request: Request):
         response.set_cookie(
             key="session_id",
             value=str(uuid.uuid4()),
-            max_age=settings.HISTORY_TTL * 30,  # 30 дней
+            max_age=settings.HISTORY_TTL,
             httponly=True,
             samesite="lax"
         )
@@ -137,7 +137,7 @@ async def get_history(
 ):
     """Get conversion history from Redis."""
 
-    user_key = get_user_key(request)
+    user_key, session_id, is_new = get_or_create_session(request)
     redis_service = RedisService(redis)
 
     history = await redis_service.get_history(
@@ -155,7 +155,7 @@ async def clear_history(
 ):
     """Clear conversion history."""
 
-    user_key = get_user_key(request)
+    user_key, session_id, is_new = get_or_create_session(request)
     redis_service = RedisService(redis)
 
     await redis_service.clear_history(
