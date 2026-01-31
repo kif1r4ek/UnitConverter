@@ -1,6 +1,7 @@
 from pydantic import Field
-from app.domain.units.length import UnitsLength
+
 from app.domain.models.validator import PositiveValueValidator
+from app.domain.units.length import UnitsLength
 
 
 class SLengthConvertRequest(PositiveValueValidator):

@@ -1,6 +1,7 @@
 from pydantic import Field
-from app.domain.units.weight import UnitsWeight
+
 from app.domain.models.validator import PositiveValueValidator
+from app.domain.units.weight import UnitsWeight
 
 
 class SWeightConvertRequest(PositiveValueValidator):

@@ -1,6 +1,6 @@
-import { validateConversionInput } from '../core/Validator.js';
-import { ConverterService } from '../core/ConverterService.js';
-import { HistoryService } from '../core/HistoryService.js';
+import {validateConversionInput} from '../core/Validator.js';
+import {ConverterService} from '../core/ConverterService.js';
+import {HistoryService} from '../core/HistoryService.js';
 
 export class UnitConverterUI {
     constructor(type) {

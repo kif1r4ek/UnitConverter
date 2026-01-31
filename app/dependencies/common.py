@@ -1,5 +1,5 @@
-from fastapi.templating import Jinja2Templates
 from fastapi import Request
+from fastapi.templating import Jinja2Templates
 from pint import UnitRegistry
 
 from app.core.logger import get_logger

@@ -3,6 +3,7 @@ from logging.handlers import RotatingFileHandler
 from pathlib import Path
 
 import structlog
+
 from app.core.config import settings
 
 

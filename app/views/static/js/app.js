@@ -1,5 +1,5 @@
-import { UnitConverterUI } from './ui/UnitConverterUI.js';
-import { initMobileMenu } from './ui/MobileMenu.js';
+import {UnitConverterUI} from './ui/UnitConverterUI.js';
+import {initMobileMenu} from './ui/MobileMenu.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();

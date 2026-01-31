@@ -1,20 +1,18 @@
 from contextlib import asynccontextmanager
 
-import uvicorn
 from fastapi import FastAPI
-
 from fastapi.staticfiles import StaticFiles
 
-from app.api.controller_pages import router as pages
 from app.api.controller_length import router as length
+from app.api.controller_pages import router as pages
 from app.api.controller_temperature import router as temperature
 from app.api.controller_weight import router as weight
 from app.core.config import settings
 from app.core.error_handlers import register_exception_handlers
-from app.core.logger import configure_logger, get_logger
+from app.core.logger import configure_logger
 from app.core.middleware import LoggingMiddleware
-from app.dependencies.common import logger
 from app.core.redis import redis_manager
+from app.dependencies.common import logger
 
 configure_logger()
 

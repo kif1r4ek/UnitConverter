@@ -5,9 +5,11 @@ Manages Redis connection pool lifecycle and provides
 async context manager for safe connection handling.
 """
 
-from redis.asyncio import Redis, ConnectionPool
+from redis.asyncio import Redis
+
 from app.core.config import settings
 from app.dependencies.common import logger
+
 
 class RedisManager:
     """
